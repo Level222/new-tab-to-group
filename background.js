@@ -1,19 +1,23 @@
+const openTabToGroup = async (groupId) => {
+  const groupTabs = await chrome.tabs.query({ groupId });
+  const groupEndTabIndex = Math.max(...groupTabs.map((tab) => tab.index));
+
+  const newTab = await chrome.tabs.create({ index: groupEndTabIndex + 1 });
+
+  await chrome.tabs.group({
+    groupId,
+    tabIds: [newTab.id]
+  });
+
+  return newTab;
+};
+
 const openTabToActiveGroup = async () => {
   const [activeTab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
   const activeGroupId = activeTab.groupId;
 
-  const activeGroupTabs = await chrome.tabs.query({ groupId: activeGroupId });
-  const lastActiveGroupTabIndex = Math.max(...activeGroupTabs.map((tab) => tab.index));
-
-  const newTab = await chrome.tabs.create({
-    index: lastActiveGroupTabIndex + 1
-  });
-
-  chrome.tabs.group({
-    groupId: activeGroupId,
-    tabIds: [newTab.id]
-  });
-}
+  return await openTabToGroup(activeGroupId);
+};
 
 chrome.commands.onCommand.addListener((command) => {
   if (command === "new-tab-to-group") {
