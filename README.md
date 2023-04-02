@@ -1,2 +1,2 @@
 # new-tab-to-group
-This is a Chrome extension that open new tabs to a tab group.
+This is a Chrome extension that opens a new tab to a tab group.
