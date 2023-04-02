@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "New Tab to Group",
+  "version": "1.0.0",
+  "description": "This is a Chrome extension that opens a new tab to a tab group.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "commands": {
+    "new-tab-to-group": {
+      "description":"Open a new tab to a tab group.",
+      "suggested_key": {
+        "default": "Alt+T"
+      }
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
