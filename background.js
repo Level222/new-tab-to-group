@@ -40,14 +40,12 @@ class OpenedTab {
     const newTab = await chrome.tabs.create({ index: groupEndTabIndex + 1 });
     const newTabId = newTab.id;
 
-    if (groupId === -1) {
-      return;
+    if (groupId !== -1) {
+      await chrome.tabs.group({
+        groupId,
+        tabIds: [newTabId]
+      });
     }
-
-    await chrome.tabs.group({
-      groupId,
-      tabIds: [newTabId]
-    });
 
     return new OpenedTab(newTabId, lastFocusedTab.id);
   }
